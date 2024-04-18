@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+
+  nginx:
+    image: nginx:alpine
+    depends_on:
+      - next
+    ports:
+      - "80:80" 
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+
+  next:
+    build: 
+      context: .
+      dockerfile: Dockerfile 
+    ports: 
+      - "3000:3000" 
+    environment:
+      - BACKEND_URL
+      - POCKETBASE_ADMIN_EMAIL
+      - POCKETBASE_ADMIN_PASSWORD
